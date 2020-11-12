@@ -5,16 +5,20 @@ const fs = require("fs");
 const { MercatorCoordinate } = require("mapbox-gl")
 const { minBy, maxBy } = require('lodash')
 
-const MAP_SIZE = 60000000
+const million = 1000 * 1000
+
+const WORLD_BORDER = 30 * million
 
 const points: any[] = [];
+
+const convertToMercator = (x: number): number => (0.5 + (x / WORLD_BORDER * 0.5))
 
 fs.createReadStream(`${__dirname}/../signs.csv`)
   .pipe(csv())
   .on("data", (data: any) => {
-    const x = parseInt(data.be_x) / MAP_SIZE
-    const y = parseInt(data.be_z) / MAP_SIZE
-
+    const x = convertToMercator(parseInt(data.be_x))
+    const y = convertToMercator(parseInt(data.be_z))
+    console.log(`${data.be_x} => ${x} || ${data.be_z} => ${y}`)
     points.push({
       type: "Feature",
       geometry: {
