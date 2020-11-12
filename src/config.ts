@@ -8,4 +8,8 @@ export const config = {
   googleAnalytics: {
     trackingCode: process.env["NEXT_PUBLIC_GOOGLE_ANALYTICS_ID"],
   },
+
+  mapbox: {
+    publicToken: process.env["NEXT_PUBLIC_MAPBOX_PUBLIC_TOKEN"],
+  },
 };
